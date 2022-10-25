@@ -44,7 +44,7 @@ public class Program
             .Alignment(Justify.Left)
             .Color(Color.Purple));
       WhiteSpace(1);
-      var panel = new Panel("Esse ferramenta foi feita para facilitar suas buscas na rede Tor(Deep Web).\n[bold]Atenção:[/] 99% dos sites que pedem algum tipo de pagamento, são golpes.\n[bold]Lembre-se[/]: [italic]você é o único responsável por suas ações.[/]");
+      var panel = new Panel("Essa ferramenta foi feita para facilitar suas buscas na rede Tor(Deep Web).\n[bold]Atenção:[/] 99% dos sites que pedem algum tipo de pagamento, são golpes.\n[bold]Lembre-se[/]: [italic]você é o único responsável por suas ações.[/]");
       panel.Header = new PanelHeader("Bem-vindo(a)!", Justify.Center);
       panel.BorderColor(Color.Purple);
       panel.Border = BoxBorder.Rounded;
