@@ -8,7 +8,7 @@ public class Program
 {
     public static async Task Main()
     {
-        await Start();
+        await LoadTor();
 
         while (true)
         {
@@ -52,14 +52,6 @@ public class Program
                     break;
                 }
             }
-        }
-    }
-
-    private static async Task Start()
-    {
-        if (OperatingSystem.IsLinux())
-        {
-            await LoadTor();
         }
     }
 }

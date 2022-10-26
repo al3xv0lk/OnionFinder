@@ -1,9 +1,6 @@
 using Spectre.Console;
-using OnionFinder.Models;
 using System.Diagnostics;
 using OnionFinder.Helpers;
-using SharpCompress.Common;
-using SharpCompress.Readers;
 using System.Threading.Tasks.Dataflow;
 
 using static Spectre.Console.AnsiConsole;
@@ -32,11 +29,11 @@ public static class TorService
         UseProxy = true
     });
     
-    public static async Task LoadTor(OperatingSystems os = OperatingSystems.Linux)
+    public static async Task LoadTor()
     {
         if (File.Exists(TorService.torPath) == false || Directory.Exists(TorService.profilePath) == false)
         {
-            await SetupTor(os);
+            await SetupTor();
         }
 
         if (TestTorProccess())
@@ -44,6 +41,31 @@ public static class TorService
             MarkupLine("Tor Browser iniciado :check_mark:");
             await TestProxy();
         };
+    }
+
+    public static async Task RunSearch(string keyword)
+    {
+        await AnsiStatusAsync("Buscando links...", async ctx =>
+        {
+            foreach (var engine in webEngines)
+            {
+                var resultPage = await _httpClient.LoadHtmlDocument(engine + keyword);
+                resultPage.FromAhmia();
+            }
+        });
+
+        if (tempUrls.Count > 0)
+        {
+            MarkupLine($"Links encontrados: [bold][purple]{tempUrls.Count}[/][/]");
+            await TestUrls(tempUrls);
+        }
+        else
+        {
+            MarkupLine($"Nenhum resultado foi encontrado.");
+        }
+
+        tempUrls.Clear();
+        sitesOnline.Clear();
     }
     
     private static bool TestTorProccess()
@@ -68,17 +90,19 @@ public static class TorService
         return true;
     }
 
-    // todo: refator this code, again, yes
-    private static async Task SetupTor(OperatingSystems os)
+    private static async Task SetupTor()
     {
         WriteLine();
-        
+
         await AnsiStatusAsync("Baixando e configurando o Tor...", async ctx =>
         {
             var htmlDoc = await _httpClient.LoadHtmlDocument("https://www.torproject.org/download/");
 
             var downloadLink = string.Empty;
-            var downloadDoc = htmlDoc.DocumentNode.SelectNodes("//a").Where(node => node.GetAttributeValue("class", "").Contains("btn btn-primary mt-4 downloadLink"));
+
+            var downloadDoc = htmlDoc.DocumentNode.SelectNodes("//a")
+                .Where(node => node.GetAttributeValue("class", "")
+                .Contains("btn btn-primary mt-4 downloadLink"));
 
             foreach (var node in downloadDoc)
             {
@@ -90,76 +114,8 @@ public static class TorService
                 }
             }
 
-            if (os == OperatingSystems.Linux)
-            {
-                //Download Linux version
-                var downloadPath = Path.Combine(torRoot, "tor.tar.xz");
-
-                _ = await _httpClient.DownloadFileAsync($"https://www.torproject.org/{downloadLink}", downloadPath);
-                
-                //Extract Linux version
-                using var stream = File.OpenRead(downloadPath);
-
-                var reader = ReaderFactory.Open(stream);
-
-                while (reader.MoveToNextEntry())
-                {
-                    if (!reader.Entry.IsDirectory)
-                    {
-                        reader.WriteEntryToDirectory(torRoot, new ExtractionOptions() { ExtractFullPath = true, Overwrite = true });
-                    }
-                }
-
-                string torrcFile = Path.Combine(torRoot, "tor-browser_en-US", "Browser", "TorBrowser", "Data", "Tor", "torrc");
-                string[] optimizations = { "EntryNodes {US}", "ExitNodes {US}", "SocksPort 127.0.0.1:9050", "StrictNodes 1" };
-
-                WriteLine("Optimizing Torrc file...");
-
-                foreach (var opt in optimizations)
-                {
-                    using var streamWriter = File.AppendText(torrcFile);
-                    streamWriter.WriteLine(opt);
-                }
-
-                try
-                {
-                    File.Copy(Path.Combine(torRoot, "prefs.js"),
-                    Path.Combine(torRoot, "tor-browser_en-US", "Browser", "TorBrowser", "Data", "Browser", "profile.default", "prefs.js"));
-
-                    var chmod = Process.Start(new ProcessStartInfo { FileName = "/usr/bin/chmod", Arguments = "700 " + Path.Combine(torRoot, "tor-browser_en-US") + " -R", UseShellExecute = true });
-                    chmod.WaitForExit();
-                }
-                catch (System.Exception)
-                {
-                    WriteLine("Arquivo prefs.js já existe... continuando...");
-                }
-            }
+            await Configure.InstallAsync(_httpClient, torRoot, downloadLink);
         });
-    }
-
-    public static async Task RunSearch(string keyword)
-    {
-        await AnsiStatusAsync("Buscando links...", async ctx =>
-        {
-            foreach (var engine in webEngines)
-            {
-                var resultPage = await _httpClient.LoadHtmlDocument(engine + keyword);
-                resultPage.FromAhmia();
-            }
-        });
-
-        if (tempUrls.Count > 0)
-        {
-            MarkupLine($" Links encontrados: [bold][purple]{tempUrls.Count}[/][/]");
-            await TestUrls(tempUrls);
-        }
-        else
-        {
-            MarkupLine($" Nenhum resultado foi encontrado.");
-        }
-
-        tempUrls.Clear();
-        sitesOnline.Clear();
     }
     
     private static async Task<string> TestProxy()
