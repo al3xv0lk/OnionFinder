@@ -66,6 +66,8 @@ public static class Configure
 
                 var chmod = Process.Start(new ProcessStartInfo { FileName = "/usr/bin/chmod", Arguments = "700 " + Path.Combine(torRoot, "tor-browser_en-US") + " -R", UseShellExecute = true });
                 chmod.WaitForExit();
+                // This Sleep can allow chmod to change the permissions correctly
+                Thread.Sleep(5);
             }
             catch (System.Exception)
             {

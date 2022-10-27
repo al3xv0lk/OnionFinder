@@ -8,10 +8,10 @@ public class Program
 {
     public static async Task Main()
     {
-        await LoadTor();
 
         while (true)
         {
+            await LoadTor();
             WhiteSpace();
 
             Write(new FigletText("OnionFinder").Alignment(Justify.Left).Color(Color.Purple));
@@ -36,15 +36,14 @@ public class Program
                     WhiteSpace();
 
                     var keyword = Ask<string>("[bold] Pesquisar:[/]").Replace(" ", "+").EscapeMarkup();
-
                     await RunSearch(keyword);
                     WhiteSpace();
 
                     var ruleEnd = new Rule("[purple]Fim dos resultados[/]");
-                        ruleEnd.Alignment = Justify.Left;
+                    ruleEnd.Alignment = Justify.Left;
 
                     Write(ruleEnd);
-                    WhiteSpace(3);
+                    WhiteSpace(1);
                 }
                 catch (TaskCanceledException) {}
                 catch (HttpRequestException)

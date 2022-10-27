@@ -5,6 +5,7 @@ using System.Threading.Tasks.Dataflow;
 
 using static Spectre.Console.AnsiConsole;
 using static OnionFinder.Helpers.AnsiConsoleHelper;
+using System.Runtime.InteropServices;
 
 namespace OnionFinder.Services;
 
@@ -23,11 +24,13 @@ public static class TorService
     private static string torPath = Path.Combine(baseTorPath, "start-tor-browser");
     private static string profilePath = Path.Combine(baseTorPath, "TorBrowser", "Data", "Browser", "profile.default");
 
+    private static HttpClient unProxiedClient = new();
     private static HttpClient _httpClient = new HttpClient(new SocketsHttpHandler()
     {
         Proxy = new System.Net.WebProxy("socks5://127.0.0.1:9050"),
         UseProxy = true
     });
+    
     
     public static async Task LoadTor()
     {
@@ -50,7 +53,9 @@ public static class TorService
             foreach (var engine in webEngines)
             {
                 var resultPage = await _httpClient.LoadHtmlDocument(engine + keyword);
-                resultPage.FromAhmia();
+                // Check for Ahmia timeout and return something
+                // System.Console.WriteLine("Result page: "+ resultPage.Text);
+                tempUrls = resultPage.FromAhmia();
             }
         });
 
@@ -61,6 +66,7 @@ public static class TorService
         }
         else
         {
+            System.Console.WriteLine();
             MarkupLine($"Nenhum resultado foi encontrado.");
         }
 
@@ -96,7 +102,7 @@ public static class TorService
 
         await AnsiStatusAsync("Baixando e configurando o Tor...", async ctx =>
         {
-            var htmlDoc = await _httpClient.LoadHtmlDocument("https://www.torproject.org/download/");
+            var htmlDoc = await unProxiedClient.LoadHtmlDocument("https://www.torproject.org/download/");
 
             var downloadLink = string.Empty;
 
@@ -104,17 +110,38 @@ public static class TorService
                 .Where(node => node.GetAttributeValue("class", "")
                 .Contains("btn btn-primary mt-4 downloadLink"));
 
-            foreach (var node in downloadDoc)
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                if (node.GetAttributeValue("href", "").EndsWith(".tar.xz") ||
-                    node.GetAttributeValue("href", "").EndsWith(".dmg") ||
-                    node.GetAttributeValue("href", "").EndsWith(".exe"))
+                foreach (var node in downloadDoc)
                 {
-                    downloadLink = node.GetAttributeValue("href", "");
+                    if (node.GetAttributeValue("href", "").EndsWith(".tar.xz"))
+                    {
+                        downloadLink = node.GetAttributeValue("href", "");
+                    }
+                }
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                foreach (var node in downloadDoc)
+                {
+                    if (node.GetAttributeValue("href", "").EndsWith(".exe"))
+                    {
+                        downloadLink = node.GetAttributeValue("href", "");
+                    }
+                }
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                foreach (var node in downloadDoc)
+                {
+                    if (node.GetAttributeValue("href", "").EndsWith(".dmg"))
+                    {
+                        downloadLink = node.GetAttributeValue("href", "");
+                    }
                 }
             }
 
-            await Configure.InstallAsync(_httpClient, torRoot, downloadLink);
+            await Configure.InstallAsync(unProxiedClient, torRoot, downloadLink);
         });
     }
     

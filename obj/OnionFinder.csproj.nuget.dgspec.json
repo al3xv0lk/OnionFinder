@@ -1,32 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Matoso\\source\\repos\\OnionFinder\\OnionFinder.csproj": {}
+    "/home/alex/Documents/C#/OnionFinder/OnionFinder.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Matoso\\source\\repos\\OnionFinder\\OnionFinder.csproj": {
+    "/home/alex/Documents/C#/OnionFinder/OnionFinder.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Matoso\\source\\repos\\OnionFinder\\OnionFinder.csproj",
+        "projectUniqueName": "/home/alex/Documents/C#/OnionFinder/OnionFinder.csproj",
         "projectName": "OnionFinder",
-        "projectPath": "C:\\Users\\Matoso\\source\\repos\\OnionFinder\\OnionFinder.csproj",
-        "packagesPath": "C:\\Users\\Matoso\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Matoso\\source\\repos\\OnionFinder\\obj\\",
+        "projectPath": "/home/alex/Documents/C#/OnionFinder/OnionFinder.csproj",
+        "packagesPath": "/home/alex/.nuget/packages/",
+        "outputPath": "/home/alex/Documents/C#/OnionFinder/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Matoso\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/alex/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -64,15 +57,26 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
           "downloadDependencies": [
             {
-              "name": "Microsoft.NETCore.App.Crossgen2.win-x64",
-              "version": "[6.0.9, 6.0.9]"
+              "name": "Microsoft.AspNetCore.App.Runtime.linux-x64",
+              "version": "[6.0.8, 6.0.8]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Crossgen2.linux-x64",
+              "version": "[6.0.8, 6.0.8]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.linux-x64",
+              "version": "[6.0.8, 6.0.8]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Runtime.linux-x64",
+              "version": "[6.0.8, 6.0.8]"
             }
           ],
           "frameworkReferences": {
@@ -80,7 +84,12 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/6.0.108/RuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "linux-x64": {
+          "#import": []
         }
       }
     }

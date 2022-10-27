@@ -4,33 +4,33 @@ namespace OnionFinder.Helpers;
 
 public static class HtmlDocumentHelper
 {
-    public static List<string> FromAhmia(this HtmlDocument htmlDoc)
+  public static List<string> FromAhmia(this HtmlDocument htmlDoc)
+  {
+    try
     {
-        try
-        {
-            var tempUrls = new List<string>();
-            var links = htmlDoc.DocumentNode.SelectNodes("//cite");
+      var tempUrls = new List<string>();
+      var links = htmlDoc.DocumentNode.SelectNodes("//cite");
 
-            if (links.Count > 0)
-            {
-                foreach (var node in links)
-                {
-                    var endUrl = "http://" + node.InnerHtml;
-                    tempUrls.Add(endUrl);
-                }
-            }
-
-            return tempUrls;
-        }
-        catch (NullReferenceException)
+      if (links.Count > 0)
+      {
+        foreach (var node in links)
         {
-            System.Console.WriteLine("No results were found. Be aware that some terms are blocked by the Web Engine itself.");
-            return default;
+          var endUrl = "http://" + node.InnerHtml;
+          tempUrls.Add(endUrl);
         }
-        catch (Exception e)
-        {
-            System.Console.WriteLine(e);
-            return default;
-        }
+      }
+      System.Console.WriteLine(tempUrls.Count);
+      return tempUrls;
     }
+    catch (NullReferenceException)
+    {
+      System.Console.WriteLine("No results were found. Be aware that some terms are blocked by the Web Engine itself.");
+      return default;
+    }
+    catch (Exception e)
+    {
+      System.Console.WriteLine(e);
+      return default;
+    }
+  }
 }
