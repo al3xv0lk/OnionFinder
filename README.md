@@ -24,3 +24,6 @@ O programa baixa, instala, configura e otimiza o Tor de forma automatizada e o u
 3. Mesmo otimizado, a velocidade das buscas pode oscilar devido aos nodes do próprio Tor e dos servidores do Ahmia(web search utilizado pelo OnionFinder).
 ## Suporte
 Linux
+##Roadmap
+- Suporte Windows
+- Otimização das buscas
