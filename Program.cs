@@ -1,4 +1,4 @@
-﻿using Spectre.Console;
+using Spectre.Console;
 
 using static Spectre.Console.AnsiConsole;
 using static OnionFinder.Services.TorService;
