@@ -10,4 +10,4 @@ build_property.EnableSingleFileAnalyzer = true
 build_property.EnableTrimAnalyzer = 
 build_property.IncludeAllContentForSelfExtract = 
 build_property.RootNamespace = OnionFinder
-build_property.ProjectDir = C:\Users\Matoso\source\repos\OnionFinder\
+build_property.ProjectDir = /home/alex/Documents/C#/OnionFinder/
