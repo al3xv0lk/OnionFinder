@@ -1,8 +1,9 @@
-using Spectre.Console;
+﻿using Spectre.Console;
 
 using static Spectre.Console.AnsiConsole;
 using static OnionFinder.Services.TorService;
 using static OnionFinder.Helpers.ConsoleHelper;
+using static OnionFinder.Helpers.AnsiConsoleHelper;
 
 public class Program
 {
@@ -37,11 +38,10 @@ public class Program
 
                     var keyword = Ask<string>("[bold] Pesquisar:[/]").Replace(" ", "+").EscapeMarkup();
                     await RunSearch(keyword);
-                    WhiteSpace();
 
                     var ruleEnd = new Rule("[purple]Fim dos resultados[/]");
                     ruleEnd.Alignment = Justify.Left;
-
+                    WhiteSpace();
                     Write(ruleEnd);
                     WhiteSpace(1);
                 }

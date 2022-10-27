@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "1f1sTcT/kiX07hUOFJhN7e0YW/wNETPmaUEuZ3VFtSWcdOKw1QVuNI/o+JXV6SN98mlQCBvXNVz4OGfbISUj8w==",
+  "dgSpecHash": "p+Xe0Wr4cTuj+oPO1rmYpjIdgoQgNu5Tty1/6i6qd3Dcn/7Ok3vyXvhvYBSWhwl8fgSRJVCFc0g0xgXfv75uNw==",
   "success": true,
   "projectFilePath": "/home/alex/Documents/C#/OnionFinder/OnionFinder.csproj",
   "expectedPackageFiles": [
@@ -8,10 +8,7 @@
     "/home/alex/.nuget/packages/sharpcompress/0.32.2/sharpcompress.0.32.2.nupkg.sha512",
     "/home/alex/.nuget/packages/spectre.console/0.45.1-preview.0.28/spectre.console.0.45.1-preview.0.28.nupkg.sha512",
     "/home/alex/.nuget/packages/system.memory/4.5.5/system.memory.4.5.5.nupkg.sha512",
-    "/home/alex/.nuget/packages/microsoft.netcore.app.runtime.linux-x64/6.0.8/microsoft.netcore.app.runtime.linux-x64.6.0.8.nupkg.sha512",
-    "/home/alex/.nuget/packages/microsoft.aspnetcore.app.runtime.linux-x64/6.0.8/microsoft.aspnetcore.app.runtime.linux-x64.6.0.8.nupkg.sha512",
-    "/home/alex/.nuget/packages/microsoft.netcore.app.crossgen2.linux-x64/6.0.8/microsoft.netcore.app.crossgen2.linux-x64.6.0.8.nupkg.sha512",
-    "/home/alex/.nuget/packages/microsoft.netcore.app.host.linux-x64/6.0.8/microsoft.netcore.app.host.linux-x64.6.0.8.nupkg.sha512"
+    "/home/alex/.nuget/packages/microsoft.netcore.app.crossgen2.linux-x64/6.0.8/microsoft.netcore.app.crossgen2.linux-x64.6.0.8.nupkg.sha512"
   ],
   "logs": []
 }
