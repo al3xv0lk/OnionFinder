@@ -1,3 +1,0 @@
-/home/alex/Documents/C#/OnionFinder/bin/Debug/net6.0/linux-x64/publish/OnionFinder.pdb
-/home/alex/Documents/C#/OnionFinder/bin/Debug/net6.0/linux-x64/publish/requirements/tor/prefs.js
-/home/alex/Documents/C#/OnionFinder/bin/Debug/net6.0/linux-x64/publish/OnionFinder
