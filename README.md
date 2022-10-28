@@ -14,10 +14,11 @@ O OnionFinder é um auxiliar de buscas na rede Tor(Deep Web), com ele você real
 O programa baixa, instala, configura e otimiza o Tor de forma automatizada e o utiliza como proxy para realizar buscas no Web Search Ahmia, todos os links obtidos então são testados de forma paralela e assíncrona.
 ## Guia de uso
 1. Baixe o projeto na pasta desejada e extraia.
-2. Utilize o comando `dotnet publish -r linux-x64` para gerar o executavel.
-3. Abra o terminal na pasta do executável criado e `./OnionFinder` para iniciar o programa, durante a primeira inicialização aguarde a devida instalação e configuração automática.
-4. Digite o termo que gostaria de pesquisar e aguarde os resultados.
-5. Copie o link desejado e cole no Tor-Browser.
+2. Instale as dependências no arquivo `OnionFinder.csproj`.
+3. Utilize o comando `dotnet publish -r linux-x64` para gerar o executavel.
+4. Abra o terminal na pasta do executável criado e `./OnionFinder` para iniciar o programa, durante a primeira inicialização aguarde a devida instalação e configuração automática.
+5. Digite o termo que gostaria de pesquisar e aguarde os resultados.
+6. Copie o link desejado e cole no Tor-Browser.
 ## Atenção
 1. O Tor-Browser será aberto automaticamente sempre que o programa for executado, ele é necessário para manter o proxy ligado e também facilita as pesquisas.
 2. Caso o Tor-Browser ou o OnionFinder não consigam conectar a rede, feche o Tor, feche o OnionFinder e execute o mesmo novamente
