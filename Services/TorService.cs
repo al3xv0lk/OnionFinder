@@ -21,12 +21,10 @@ public static class TorService
   private static string baseTorPath = Path.Combine(torRoot, "tor-browser_en-US", "Browser");
   private static string torPath = Path.Combine(baseTorPath, "start-tor-browser");
   private static string profilePath = Path.Combine(baseTorPath, "TorBrowser", "Data", "Browser", "profile.default");
-
-  private static HttpClient unProxiedClient = new();
   private static HttpClient _httpClient = new HttpClient(new SocketsHttpHandler()
   {
     Proxy = new System.Net.WebProxy("socks5://127.0.0.1:9050"),
-    UseProxy = true
+    UseProxy = false
   });
 
 
@@ -40,6 +38,11 @@ public static class TorService
     if (TestTorProccess())
     {
       MarkupLine("Tor Browser iniciado :check_mark:");
+      _httpClient = new HttpClient(new SocketsHttpHandler()
+      {
+        Proxy = new System.Net.WebProxy("socks5://127.0.0.1:9050"),
+        UseProxy = true
+      });
       await TestProxy();
     };
   }
@@ -69,12 +72,12 @@ public static class TorService
         .Width(75)
         .AddItem("Links online", sitesOnline.Count, Color.Purple)
         .AddItem("Links encontrados", tempUrls.Count, Color.White))
-            {
-                Header = new PanelHeader("Total", Justify.Center),
-                Padding = new Padding(1),
-                Border = BoxBorder.Rounded,
-                BorderStyle = new Style(Color.Purple)
-            };
+    {
+      Header = new PanelHeader("Total", Justify.Center),
+      Padding = new Padding(1),
+      Border = BoxBorder.Rounded,
+      BorderStyle = new Style(Color.Purple)
+    };
     Write(panel);
     // AnsiChart(sitesOnline.Count, "Links online", tempUrls.Count, "Links encontrados");
 
@@ -110,7 +113,7 @@ public static class TorService
 
     await AnsiStatusAsync("Baixando e configurando o Tor...", async ctx =>
     {
-      var htmlDoc = await unProxiedClient.LoadHtmlDocument("https://www.torproject.org/download/");
+      var htmlDoc = await _httpClient.LoadHtmlDocument("https://www.torproject.org/download/");
 
       var downloadLink = string.Empty;
 
@@ -149,7 +152,7 @@ public static class TorService
         }
       }
 
-      await Configure.InstallAsync(unProxiedClient, torRoot, downloadLink);
+      await Configure.InstallAsync(_httpClient, torRoot, downloadLink);
     });
   }
 
@@ -193,25 +196,25 @@ public static class TorService
       {
         var tester = new ActionBlock<string>(async url =>
               {
-            var htmlDoc = await _httpClient.LoadHtmlDocument(url);
+                var htmlDoc = await _httpClient.LoadHtmlDocument(url);
 
-            var title = htmlDoc.DocumentNode.SelectSingleNode("//head/title").InnerText;
+                var title = htmlDoc.DocumentNode.SelectSingleNode("//head/title").InnerText;
 
-            title = title.Length > 50 ? title[..50] : title;
+                title = title.Length > 50 ? title[..50] : title;
 
-            var table = new Table()
-            {
-              Width = 80,
-              Border = TableBorder.Rounded,
-              BorderStyle = new Style(Color.Purple)
-            };
+                var table = new Table()
+                {
+                  Width = 80,
+                  Border = TableBorder.Rounded,
+                  BorderStyle = new Style(Color.Purple)
+                };
 
-            table.AddColumn(new TableColumn(new Markup($"[bold]{title}[/]")));
-            table.AddRow(new Markup($"[link]{url}[/]"));
+                table.AddColumn(new TableColumn(new Markup($"[bold]{title}[/]")));
+                table.AddRow(new Markup($"[link]{url}[/]"));
 
-            Write(table);
-            sitesOnline.Add(url);
-          }, new ExecutionDataflowBlockOptions { MaxDegreeOfParallelism = 100 });
+                Write(table);
+                sitesOnline.Add(url);
+              }, new ExecutionDataflowBlockOptions { MaxDegreeOfParallelism = 100 });
 
         Parallel.ForEach(urls, (url) => tester.SendAsync(url));
 
