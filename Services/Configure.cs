@@ -51,7 +51,7 @@ public static class Configure
             string torrcFile = Path.Combine(torRoot, "tor-browser_en-US", "Browser", "TorBrowser", "Data", "Tor", "torrc");
             string[] optimizations = { "EntryNodes {US}", "ExitNodes {US}", "SocksPort 127.0.0.1:9050", "StrictNodes 1" };
 
-            WriteLine("Optimizing Torrc file...");
+            MarkupLine("Otimização de nodes realizado :check_mark:");
 
             foreach (var opt in optimizations)
             {
@@ -67,7 +67,7 @@ public static class Configure
                 var chmod = Process.Start(new ProcessStartInfo { FileName = "/usr/bin/chmod", Arguments = "700 " + Path.Combine(torRoot, "tor-browser_en-US") + " -R", UseShellExecute = true });
                 chmod.WaitForExit();
                 // This Sleep can allow chmod to change the permissions correctly
-                Thread.Sleep(5);
+                Thread.Sleep(10);
             }
             catch (System.Exception)
             {

@@ -12,10 +12,7 @@ namespace OnionFinder.Services;
 
 public static class TorService
 {
-  private static string[] webEngines =
-  {
-        "http://juhanurmihxlp77nkq76byazcldy2hlmovfu2epvl5ankdibsot4csyd.onion/search/?q="
-    };
+  private static string webEngine = "http://juhanurmihxlp77nkq76byazcldy2hlmovfu2epvl5ankdibsot4csyd.onion/search/?q=";
 
   private static List<string> tempUrls = new();
   private static List<string> sitesOnline = new();
@@ -51,13 +48,10 @@ public static class TorService
   {
     await AnsiStatusAsync("Buscando links...", async ctx =>
     {
-      foreach (var engine in webEngines)
-      {
-        var resultPage = await _httpClient.LoadHtmlDocument(engine + keyword);
-        // Check for Ahmia timeout and return something
-        // System.Console.WriteLine("Result page: "+ resultPage.Text);
-        tempUrls = resultPage.FromAhmia();
-      }
+      var resultPage = await _httpClient.LoadHtmlDocument(webEngine + keyword);
+      // Check for Ahmia timeout and return something
+      // System.Console.WriteLine("Result page: "+ resultPage.Text);
+      tempUrls = resultPage.FromAhmia();
     });
 
     if (tempUrls.Count > 0)
