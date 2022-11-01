@@ -19,16 +19,11 @@ public class Program
             {
                 try
                 {
-                    WhiteSpace();
-
                     var keyword = Ask<string>("[bold] Pesquisar:[/]").Replace(" ", "+").EscapeMarkup();
+                    
                     await RunSearch(keyword);
-
-                    var ruleEnd = new Rule("[purple]Fim dos resultados[/]");
-                    ruleEnd.Alignment = Justify.Left;
-                    WhiteSpace();
-                    Write(ruleEnd);
-                    WhiteSpace(1);
+                    
+                    endOfResultsRule();
                 }
                 catch (TaskCanceledException) {}
                 catch (HttpRequestException)
