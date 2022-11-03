@@ -12,15 +12,15 @@ public static class Configure
 {
     public static async Task InstallAsync(HttpClient httpClient, string torRoot, string downloadLink)
     {
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) 
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
             await ConfigureService(httpClient, OSPlatform.Windows, torRoot, downloadLink);
         }
-        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) 
+        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
         {
             await ConfigureService(httpClient, OSPlatform.Linux, torRoot, downloadLink);
         }
-        else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX)) 
+        else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
         {
             await ConfigureService(httpClient, OSPlatform.OSX, torRoot, downloadLink);
         }
@@ -34,7 +34,7 @@ public static class Configure
             var downloadPath = Path.Combine(torRoot, "tor.tar.xz");
 
             _ = await httpClient.DownloadFileAsync($"https://www.torproject.org/{downloadLink}", downloadPath);
-            
+
             //Extract Linux version
             using var stream = File.OpenRead(downloadPath);
 
@@ -73,6 +73,10 @@ public static class Configure
             {
                 WriteLine("Arquivo prefs.js já existe... continuando...");
             }
+        }
+        else if (os == OSPlatform.Windows)
+        {
+            WriteLine("Test Git");
         }
     }
 }
