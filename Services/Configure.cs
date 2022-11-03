@@ -76,7 +76,7 @@ public static class Configure
         }
         else if (os == OSPlatform.Windows)
         {
-            WriteLine("Test Git");
+            WriteLine("Testgit2");
         }
     }
 }
