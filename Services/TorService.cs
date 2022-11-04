@@ -17,7 +17,7 @@ public static class TorService
   private static List<string> tempUrls = new();
   private static List<string> sitesOnline = new();
 
-  private static string torRoot = Path.Combine(System.AppContext.BaseDirectory, "requirements", "tor");
+  private static string torRoot = Path.Combine(System.AppContext.BaseDirectory, "tor");
   private static string baseTorPath = Path.Combine(torRoot, "tor-browser_en-US", "Browser");
   private static string torPath = Path.Combine(baseTorPath, "start-tor-browser");
   private static string profilePath = Path.Combine(baseTorPath, "TorBrowser", "Data", "Browser", "profile.default");
@@ -30,11 +30,6 @@ public static class TorService
 
   public static async Task LoadTor()
   {
-    if (File.Exists(TorService.torPath) == false || Directory.Exists(TorService.profilePath) == false)
-    {
-      await SetupTor();
-    }
-
     if (TestTorProccess())
     {
       MarkupLine("Tor Browser iniciado :check_mark:");
@@ -85,28 +80,6 @@ public static class TorService
     sitesOnline.Clear();
   }
 
-  private static bool TestTorProccess()
-  {
-    if (Process.GetProcessesByName("tor").Length == 0)
-    {
-      try
-      {
-        AnsiStatus("Iniciando Tor Browser...", ctx =>
-        {
-          Process.Start(new ProcessStartInfo { FileName = torPath, Arguments = "--detach", UseShellExecute = true });
-          Thread.Sleep(5000);
-          return Task.CompletedTask;
-        });
-      }
-      catch (System.Exception)
-      {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
   private static async Task SetupTor()
   {
     WriteLine();
@@ -120,6 +93,7 @@ public static class TorService
       var downloadDoc = htmlDoc.DocumentNode.SelectNodes("//a")
               .Where(node => node.GetAttributeValue("class", "")
               .Contains("btn btn-primary mt-4 downloadLink"));
+      
 
       if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
       {
@@ -151,11 +125,29 @@ public static class TorService
           }
         }
       }
-
       await Configure.InstallAsync(_httpClient, torRoot, downloadLink);
     });
   }
 
+ private static bool TestTorProccess()
+  {
+    try
+    {
+      AnsiStatus("Inicie o Tor Browser...", ctx =>
+      {
+        while (Process.GetProcessesByName("tor").Length == 0)
+        {
+          Thread.Sleep(1000);
+        }
+        return Task.CompletedTask;
+      });
+    }
+    catch (System.Exception)
+    {
+      return false;
+    }
+    return true;
+  }
   private static async Task<string> TestProxy()
   {
     var value = string.Empty;
