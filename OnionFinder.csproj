@@ -11,8 +11,5 @@
     <PackageReference Include="HtmlAgilityPack" Version="1.11.46"/>
     <PackageReference Include="SharpCompress" Version="0.32.2"/>
     <PackageReference Include="Spectre.Console" Version="0.45.1-preview.0.28"/>
-    <None Update="requirements/tor/prefs.js">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 </Project>
