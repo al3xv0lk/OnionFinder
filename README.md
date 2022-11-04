@@ -11,16 +11,19 @@
 ## Sobre o projeto
 O OnionFinder é um auxiliar de buscas na rede Tor(Deep Web), com ele você realiza pesquisas e recebe links que realmente estão online, pois ele analisa todos os links antes de retornar os resultados, evitando perda de tempo por conta de links quebrados.
 ## Como funciona
-O programa baixa, instala, configura e otimiza o Tor de forma automatizada e o utiliza como proxy para realizar buscas no Web Search Ahmia, todos os links obtidos então são testados de forma paralela e assíncrona.
+O OnionFinder utiliza o Tor como proxy para realizar buscas no Web Search Ahmia, todos os links obtidos são testados de forma paralela e assíncrona.
 ## Guia de uso
-1. Baixe o projeto na pasta desejada e extraia.
-2. Utilize o comando `dotnet publish -r linux-x64` para gerar o executavel.
-3. Abra o terminal na pasta do executável criado e `./OnionFinder` para iniciar o programa, durante a primeira inicialização aguarde a devida instalação e configuração automática.
-4. Digite o termo que gostaria de pesquisar e aguarde os resultados.
-5. Copie o link desejado e cole no Tor-Browser.
+1. Baixe e instale o Tor Browser no site oficial: https://www.torproject.org/download/
+2. Baixe o executável do OnionFinder dentro da pasta "Releases"(ou compile com o source)
+3. Copie o executável para a pasta raiz do Tor
+4. Adicione a linha "SocksPort 127.0.0.1:9050" ao arquivo "torrc", localizado em: "TorBrowser\Data\Tor"
+5. Inicie o Tor e conecte.
+6. LINUX: Abra o terminal na pasta do executável e `./OnionFinder` para iniciar o programa. WINDOWS: Abra o OnionFinder normalmente.
+7. Digite o termo que gostaria de pesquisar e aguarde os resultados.
+8. Copie o link desejado e cole no Tor-Browser.
 ## Atenção
-1. O Tor-Browser será aberto automaticamente sempre que o programa for executado, ele é necessário para manter o proxy ligado e também facilita as pesquisas.
-2. Caso o Tor-Browser ou o OnionFinder não consigam conectar a rede, feche o Tor, feche o OnionFinder e execute o mesmo novamente
+1. O Tor-Browser é necessário para manter o proxy ligado e também facilita as pesquisas.
+2. Caso o Tor-Browser ou o OnionFinder não consigam conectar a rede, reinicie o Tor e reinicie o OnionFinder.
 3. Mesmo otimizado, a velocidade das buscas pode oscilar devido aos nodes do próprio Tor e dos servidores do Ahmia(web search utilizado pelo OnionFinder).
 ## Suporte
-Linux
+Windows e Linux
