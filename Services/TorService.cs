@@ -125,7 +125,7 @@ public static class TorService
           }
         }
       }
-      await Configure.InstallAsync(_httpClient, torRoot, downloadLink);
+      // await Configure.InstallAsync(_httpClient, torRoot, downloadLink);
     });
   }
 
