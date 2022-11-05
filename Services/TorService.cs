@@ -80,55 +80,6 @@ public static class TorService
     sitesOnline.Clear();
   }
 
-  private static async Task SetupTor()
-  {
-    WriteLine();
-
-    await AnsiStatusAsync("Baixando e configurando o Tor...", async ctx =>
-    {
-      var htmlDoc = await _httpClient.LoadHtmlDocument("https://www.torproject.org/download/");
-
-      var downloadLink = string.Empty;
-
-      var downloadDoc = htmlDoc.DocumentNode.SelectNodes("//a")
-              .Where(node => node.GetAttributeValue("class", "")
-              .Contains("btn btn-primary mt-4 downloadLink"));
-      
-
-      if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-      {
-        foreach (var node in downloadDoc)
-        {
-          if (node.GetAttributeValue("href", "").EndsWith(".tar.xz"))
-          {
-            downloadLink = node.GetAttributeValue("href", "");
-          }
-        }
-      }
-      else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-      {
-        foreach (var node in downloadDoc)
-        {
-          if (node.GetAttributeValue("href", "").EndsWith(".exe"))
-          {
-            downloadLink = node.GetAttributeValue("href", "");
-          }
-        }
-      }
-      else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-      {
-        foreach (var node in downloadDoc)
-        {
-          if (node.GetAttributeValue("href", "").EndsWith(".dmg"))
-          {
-            downloadLink = node.GetAttributeValue("href", "");
-          }
-        }
-      }
-      // await Configure.InstallAsync(_httpClient, torRoot, downloadLink);
-    });
-  }
-
  private static bool TestTorProccess()
   {
     try
