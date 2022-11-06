@@ -6,7 +6,6 @@ using System.Threading.Tasks.Dataflow;
 using static Spectre.Console.AnsiConsole;
 using static OnionFinder.Helpers.AnsiConsoleHelper;
 using static OnionFinder.Helpers.ConsoleHelper;
-using System.Runtime.InteropServices;
 
 namespace OnionFinder.Services;
 
