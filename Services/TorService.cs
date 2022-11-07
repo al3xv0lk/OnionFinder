@@ -46,8 +46,6 @@ public static class TorService
     await AnsiStatusAsync("Buscando links...", async ctx =>
     {
       var resultPage = await _httpClient.LoadHtmlDocument(webEngine + keyword);
-      // Check for Ahmia timeout and return something
-      // System.Console.WriteLine("Result page: "+ resultPage.Text);
       tempUrls = resultPage.FromAhmia();
     });
 
