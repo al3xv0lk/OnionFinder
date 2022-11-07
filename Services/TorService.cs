@@ -71,7 +71,6 @@ public static class TorService
       BorderStyle = new Style(Color.Purple)
     };
     Write(panel);
-    // AnsiChart(sitesOnline.Count, "Links online", tempUrls.Count, "Links encontrados");
 
     tempUrls.Clear();
     sitesOnline.Clear();
